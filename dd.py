@@ -4,20 +4,22 @@ import csv
 import sys
 import getopt
 import tweepy
-import pprint
 import config
 import time
 import datetime
 from dateutil.parser import parse
-
 
 class DeadDove:
 
   # Inits the class with base calls/logic
   # :param options|array
   def __init__(self, options):
+    print('Starting dead dove...')
+    self.deleted = 0;
+    self.missing = 0;
     self.checkConfig()
     self.parseOpts(options)
+    print('Deleted a total of ' + str(self.deleted) + ' tweets. ' + str(self.missing) + ' did not exist. Rest easy.')
 
   # Sets our config to class vars
   def checkConfig(self):
@@ -29,9 +31,8 @@ class DeadDove:
     if('--help' or '-h') in options:
       self.displayHelp();
     else:
-      self.parseCSV()
       self.setAPI()
-      self.printTweets()
+      self.parseCSV()
 
   # Displays our help menu
   def displayHelp(self):
@@ -47,7 +48,8 @@ class DeadDove:
     for row in tweets:
       tweetTime  = self.getEnoch(row['timestamp'])
       if(tweetTime < time):
-        pprint.pprint(row['text'])
+        print('Deleting: ' + row['text'])
+        self.deleteTweet(row['tweet_id'])
 
   # Returns the unix timestamp for maths
   def getEnoch(self, timestamp):
@@ -61,10 +63,16 @@ class DeadDove:
 
     self.api = tweepy.API(auth)
 
+  # Passes the call to the twitter api to drop it like it's hot
+  # I am using a 5 second sleep call to slow the hits to the API (rate limiting)
   def deleteTweet(self, id):
-    # delete stuffs
-
-
+    try:
+      self.api.destroy_status(id)
+      self.deleted = self.deleted + 1
+      time.sleep(5)
+    except tweepy.error.TweepError:
+      self.missing = self.missing + 1
+      pass
 
 if __name__ == "__main__":
   DeadDove(sys.argv[1:])
