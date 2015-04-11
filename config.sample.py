@@ -10,7 +10,7 @@ twitter = {
 options = {
   # data options
   "archive" : "/path/to/twitter_archive.csv",
-  "date"    : "",
+  "date"    : "01/01/2012",
   "mock"    : False
 }
 
