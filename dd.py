@@ -48,7 +48,7 @@ class DeadDove:
     for row in tweets:
       tweetTime  = self.getEnoch(row['timestamp'])
       if(tweetTime < time):
-        print('Deleting: ' + row['text'])
+        print('Deleting (' + row['timestamp'] + '): ' + row['text'])
         self.deleteTweet(row['tweet_id'])
 
   # Returns the unix timestamp for maths

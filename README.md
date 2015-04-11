@@ -1,6 +1,6 @@
 # dead dove
 
-I don't know what I was expected.
+I don't know what I expected.
 
 ![dead-dove](http://i.imgur.com/PLTZJRh.gif)
 
