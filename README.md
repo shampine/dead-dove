@@ -1,4 +1,4 @@
-# deaddove [dd]
+# dead dove
 
 I don't know what I was expected.
 
@@ -13,7 +13,9 @@ I don't know what I was expected.
 
 ## flags
 
-
+| flag          | value         | description            |
+| :-----------: | :-----------: | :---------:            | 
+| --help (-h)   | none          | Displays the help menu |
 
 ## requirements
 
