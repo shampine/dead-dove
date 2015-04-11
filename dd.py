@@ -6,6 +6,10 @@ import getopt
 import tweepy
 import pprint
 import config
+import time
+import datetime
+from dateutil.parser import parse
+
 
 class DeadDove:
 
@@ -25,6 +29,7 @@ class DeadDove:
     if('--help' or '-h') in options:
       self.displayHelp();
     else:
+      self.parseCSV()
       self.setAPI()
       self.printTweets()
 
@@ -33,6 +38,22 @@ class DeadDove:
     print("This will display our help menu. Probably will be super janky.")
     sys.exit
 
+  # Parses the CSV with only the tweets older than the date specified
+  def parseCSV(self):
+    archive  = open(self.options['archive'])
+    tweets   = csv.DictReader(archive)
+    time     = self.getEnoch(self.options['date'])
+
+    for row in tweets:
+      tweetTime  = self.getEnoch(row['timestamp'])
+      if(tweetTime < time):
+        pprint.pprint(row['text'])
+
+  # Returns the unix timestamp for maths
+  def getEnoch(self, timestamp):
+    dt = parse(timestamp)
+    return time.mktime(dt.timetuple())
+
   # Sets the API using the auth keys from the config
   def setAPI(self):
     auth = tweepy.OAuthHandler(self.twitter['consumer_key'], self.twitter['consumer_secret'])
@@ -40,13 +61,8 @@ class DeadDove:
 
     self.api = tweepy.API(auth)
 
-  # Retrieves our timeline, iterates over the tweets
-  # This is going away, just put it in to test if the connection to tweeters worked
-  def printTweets(self):
-    public_tweets = self.api.home_timeline()
-
-    for tweet in public_tweets:
-        print(tweet.text)
+  def deleteTweet(self, id):
+    # delete stuffs
 
 
 
