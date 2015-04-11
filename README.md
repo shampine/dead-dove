@@ -7,7 +7,7 @@ I don't know what I was expected.
 ## usage
 
 1) Request your [twitter archive](https://twitter.com/settings/account)  
-2) [Create](https://apps.twitter.com) a twitter application with read & write access, generate a self-use token
+2) [Create](https://apps.twitter.com) a twitter application with read & write access, generate a self-use token  
 3) Copy & modify `config.sample.py` to `config.py`  
 4) `python3 dd.py`
 
