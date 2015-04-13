@@ -4,6 +4,16 @@ I don't know what I expected.
 
 ![dead-dove](http://i.imgur.com/PLTZJRh.gif)
 
+## environment
+
+Requires a Python3 environment, OS X ships with 2.7 by default. I recommend setting up a virtualenv to use Python3 inside of.
+
+```
+sudo pip install virtualenv
+virtualenv --python=/usr/local/bin/python3 python3_env
+source python3_env/bin/activate
+```
+
 ## usage
 
 1) Request your [twitter archive](https://twitter.com/settings/account)  
