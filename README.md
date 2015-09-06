@@ -1,6 +1,6 @@
 # dead dove
 
-Small script to delete tweets from Twitter. Utilizes your exported history from twitter and a set date. Allows you to read all your past -mistakes- tweets as it deletes them in a shell.
+Small script to delete tweets from Twitter. Utilizes your exported history from twitter and a set date. Allows you to read all your past ~~mistakes~~ tweets as it deletes them in a shell.
 
 ![dead-dove](http://i.imgur.com/PLTZJRh.gif)
 
