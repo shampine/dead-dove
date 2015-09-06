@@ -2,11 +2,9 @@
 
 import csv
 import sys
-import getopt
 import tweepy
 import config
 import time
-import datetime
 from dateutil.parser import parse
 
 class DeadDove:
@@ -15,8 +13,8 @@ class DeadDove:
   # :param options|array
   def __init__(self, options):
     print('Starting dead dove...')
-    self.deleted = 0;
-    self.missing = 0;
+    self.deleted = 0
+    self.missing = 0
     self.checkConfig()
     self.parseOpts(options)
     print('Deleted a total of ' + str(self.deleted) + ' tweets. ' + str(self.missing) + ' did not exist. Rest easy.')
@@ -28,8 +26,8 @@ class DeadDove:
 
   # Parses the options passed on the CLI, override the config
   def parseOpts(self, options):
-    if('--help' or '-h') in options:
-      self.displayHelp();
+    if set(['--help', '-h']) & set(options):
+      self.displayHelp()
     else:
       self.setAPI()
       self.parseCSV()
@@ -37,22 +35,24 @@ class DeadDove:
   # Displays our help menu
   def displayHelp(self):
     print("This will display our help menu. Probably will be super janky.")
-    sys.exit
+    sys.exit()
 
   # Parses the CSV with only the tweets older than the date specified
   def parseCSV(self):
     archive  = open(self.options['archive'])
     tweets   = csv.DictReader(archive)
-    time     = self.getEnoch(self.options['date'])
+    time     = self.getEpoch(self.options['date'])
 
     for row in tweets:
-      tweetTime  = self.getEnoch(row['timestamp'])
+      tweetTime  = self.getEpoch(row['timestamp'])
       if(tweetTime < time):
         print('Deleting (' + row['timestamp'] + '): ' + row['text'])
         self.deleteTweet(row['tweet_id'])
 
+    archive.close()
+
   # Returns the unix timestamp for maths
-  def getEnoch(self, timestamp):
+  def getEpoch(self, timestamp):
     dt = parse(timestamp)
     return time.mktime(dt.timetuple())
 
@@ -72,7 +72,6 @@ class DeadDove:
       time.sleep(5)
     except tweepy.error.TweepError:
       self.missing = self.missing + 1
-      pass
 
 if __name__ == "__main__":
   DeadDove(sys.argv[1:])
